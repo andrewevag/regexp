@@ -3,8 +3,6 @@
 #include <set>
 #include <vector>
 
-//if it is implemented by a 2d table it needs to have a junk state
-//like 0 so the
 
 class Dfa
 {

@@ -4,6 +4,11 @@
 #include <set>
 #include <algorithm>
 
+
+/*
+ * TODO Change this so it uses memory more efficiently
+ *      At the moment uses 8x the memory it needs by storing booleans
+ */
 class Integer {
 public:
 	Integer();
