@@ -16,7 +16,7 @@ Link with `libregexp.a` and include `regexp.hpp` in `inc/`
 ```C++
 #include "regexp.hpp"
 ...
- 
+
     Regexp* r = Regexp::parse("[a-zA-Z]+");	
 	Dfa d = r->toNfae().toDfa();
 	
