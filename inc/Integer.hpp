@@ -6,8 +6,7 @@
 
 
 /*
- * TODO Change this so it uses memory more efficiently
- *      At the moment uses 8x the memory it needs by storing booleans
+ * std::vector is optimized in this case and stores only 1 bit for each boolean
  */
 class Integer {
 public:
