@@ -76,7 +76,6 @@ public:
 		//final_of_first 	---epsilon-->  new_final
 		//final_of_second 	---epsilon-->  new_final
 		//so this needs to new states and merging of the two 
-		//maybe we will give a new nfa_delta merge function or we will do it manually.
 		
 		Nfae leftnfae = _left->toNfae();
 		Nfae rightnfae = _right->toNfae();
@@ -129,7 +128,6 @@ public:
 		Nfae leftnfa = _left->toNfae(), rightnfa = _right->toNfae();
 
 		auto mapper = leftnfa.mergeAsDifferent(rightnfa);
-		//ok here we do this
 		//new_start ---epsilon---> left_start
 		//left_end  ---epsilon---> right_start
 		//right_end ---epsilon---> new_end

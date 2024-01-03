@@ -20,7 +20,6 @@ std::set<size_t> Nfae::eClosure(std::set<size_t> s)
 
 void Nfae::eClosure_h(size_t s, std::set<size_t> &seen)
 {
-	//this algorithm is
 	if(seen.find(s) == seen.end()){
 		//this is if not found
 		seen.insert(s);
@@ -134,7 +133,6 @@ Dfa Nfae::toDfa()
 	std::set<size_t> dfa_final_states;
 	for(auto pair : subsetToDfaState){
 		for(auto final_state : _final_states){
-			// std::cout << "got in here" << std::endl;
 			// std::cout << pair.first << std::endl;
 			if(pair.first.getDigit(final_state)){
 				//it is a final state
@@ -166,12 +164,7 @@ Dfa Nfae::toDfa()
  * 	}
  * }
  *
- * maybe they need to be hashed so that they can be identified
- * you could do the 2^i bit set to represent each state
- * Dtran :: Intinf, char -> Intinf
  *
- * either i need a way to key the sets by using very large numbers
- * or bitsets as vector<bool> ... let's go with the bitset one
  *
  *
  */
