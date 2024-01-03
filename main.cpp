@@ -1,11 +1,5 @@
 #include <iostream>
-#include <memory>
 #include "regexp.hpp"
-#include "Integer.hpp"
-#include <map>
-#include <cstdio>
-#include <list>
-#include <string>
 
 int main(){
 	

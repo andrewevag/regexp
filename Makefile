@@ -1,6 +1,7 @@
 .PHONY = default clean help
 CXX = g++
 INCLUDE = -I$(PWD)/$(INC)
+LIBINCLUDE= -L$(PWD)/
 CXXFLAGS = -g -Wall $(INCLUDE)
 BINS = main
 SRC = src
@@ -10,22 +11,25 @@ SOURCE = $(wildcard $(SRC)/*.cpp)
 SOURCE += $(patsubst $(SRC)/%.l, $(SRC)/%.cpp, $(wildcard $(SRC)/*.l))
 SOURCE += $(patsubst $(SRC)/%.y, $(SRC)/%.cpp, $(wildcard $(SRC)/*.y))
 OBJECTS = $(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SOURCE))
-LIBS = 
+LIBS = -lregexp
 INDUCED = $(patsubst $(SRC)/%.l, $(SRC)/%.cpp, $(wildcard $(SRC)/*.l))
 INDUCED += $(patsubst $(SRC)/%.y, $(SRC)/%.cpp, $(wildcard $(SRC)/*.y))
 INDUCED += $(patsubst $(SRC)/%.y, $(INC)/%.hpp, $(wildcard $(SRC)/*.y))
 INDUCED += $(patsubst $(SRC)/%.y, $(SRC)/%.output, $(wildcard $(SRC)/*.y))
+LIBRARY = libregexp.a
 
 default: $(OBJ) $(BINS)  
 
 $(OBJ):
 	mkdir $(OBJ)
+$(LIBRARY): $(OBJECTS)
+	ar -rcs $@ $(OBJECTS)
 
-main: main.o $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $^ $(LIBS)
+main: main.o $(LIBRARY)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) $(LIBINCLUDE) -o $@ $< $(LIBS)
 
 main.o: main.cpp  $(INDUCED)
-	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $< $(LIBS)
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $< 
 
 $(SRC)/regexplexer.cpp: $(SRC)/regexplexer.l
 	flex -s -o $@ $< 
@@ -35,11 +39,10 @@ $(INC)/regexpparser.hpp $(SRC)/regexpparser.cpp: $(SRC)/regexpparser.y
 	mv $(SRC)/regexpparser.hpp $(INC)/regexpparser.hpp
 
 %.o: %.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $^ $(LIBS)
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $^ 
 
 $(OBJ)/%.o: $(SRC)/%.cpp
-	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $^ $(LIBS)
-
+	$(CXX) -c $(CXXFLAGS) $(INCLUDE) -o $@ $^ 
 
 
 clean: 
@@ -47,7 +50,7 @@ clean:
 	$(RM) -df $(OBJ)
 	$(RM) -f $(TESTBINS)
 	$(RM) -df $(TESTBINFOLDER)
-	
+	$(RM) -f $(LIBRARY)
 help: 
 	@echo "\e[1;34mmake:\e[0m\n\t builds $(BINS) by compiling all the $(PWD)/$(SRC) and $(PWD) folder and linking it to bins"
 	@echo "\e[1;34mmake clean:\e[0m\n\t cleans $(OBJ) folder and bins ($(BINS)) and object files in the cwd"
